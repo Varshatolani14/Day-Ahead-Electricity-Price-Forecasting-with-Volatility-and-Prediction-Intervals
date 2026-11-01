@@ -1,0 +1,11 @@
+arch>=7.0
+matplotlib>=3.8
+numpy>=1.26
+pandas>=2.1
+python-docx>=1.1
+reportlab>=4.0
+requests>=2.31
+scikit-learn>=1.4
+statsmodels>=0.14
+streamlit>=1.49
+uvicorn>=0.52.0

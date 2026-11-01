@@ -1,0 +1,38 @@
+{
+  "bidding_zone": "DE-LU",
+  "frequency": "Hourly UTC; 15-minute API observations averaged to the hour",
+  "training_start": "2024-10-01T00:00:00+00:00",
+  "training_end": "2025-03-29T23:00:00+00:00",
+  "test_start": "2025-03-30T00:00:00+00:00",
+  "test_end": "2026-08-31T23:00:00+00:00",
+  "training_observations": 4320,
+  "test_observations": 12480,
+  "test_days": 520,
+  "minimum_training_days": 180,
+  "sarima_training_days": 180,
+  "metrics": {
+    "sarima_garch": {
+      "mae": 23.281474765767285,
+      "rmse": 36.375796870709856,
+      "smape_percent": 83.34346225119546,
+      "coverage_80": 0.8292467948717949,
+      "mean_interval_width": 83.24671435897592,
+      "pinball_10": 6.433686250958966,
+      "pinball_90": 6.304628626219633
+    },
+    "quantile_boosting": {
+      "mae": 25.112807980672542,
+      "rmse": 38.273121420541564,
+      "smape_percent": 86.52871431365466,
+      "coverage_80": 0.7984775641025641,
+      "mean_interval_width": 81.89794925126716,
+      "pinball_10": 6.7745757095232575,
+      "pinball_90": 6.089761577313888
+    }
+  },
+  "sarima_converged": true,
+  "garch_converged": true,
+  "sarima_parameters": "(1,0,1) x (1,0,1,24)",
+  "garch_parameters": "GARCH(1,1), zero-mean standardized SARIMA residuals",
+  "quantile_parameters": "GradientBoostingRegressor: 10th, 50th, and 90th percentiles"
+}
