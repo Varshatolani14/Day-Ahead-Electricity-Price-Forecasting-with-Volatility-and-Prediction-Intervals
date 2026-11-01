@@ -75,6 +75,7 @@ dashboard to regenerate the forecast results and image files.
 - `src/display.py` — validated, display-only currency/unit conversion.
 - `reports/TSA_AAT_Report.pdf` — submission-ready report in the supplied section order.
 - `reports/TSA_AAT_Report.docx` — editable copy of the report.
+- `reports/TSA_AAT_Report_Formatted.docx` — additional formatted editable copy.
 - `reports/Day_Ahead_Electricity_Forecasting_Presentation.pptx` — editable project presentation.
 - `reports/Day_Ahead_Electricity_Forecasting_Presentation.pdf` — ready-to-present PDF version.
 - `reports/presentation_assets/` — presentation figures and genuine dashboard screenshots.
