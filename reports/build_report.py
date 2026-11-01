@@ -251,7 +251,10 @@ def _report_content(
         f"{metrics['sarima_garch']['coverage_80']:.1%} and "
         f"{metrics['quantile_boosting']['coverage_80']:.1%}, respectively. "
         "The results show the value of reporting both point accuracy and "
-        "uncertainty, but apply only to this zone, data window, and feature set."
+        "uncertainty, but apply only to this zone, data window, and feature set. "
+        "An interactive dashboard supports test-day, model, history, and display-unit "
+        "exploration. Currency conversion changes displayed values only; INR remains "
+        "a converted DE-LU price, not an Indian-market forecast."
     )
     return {
         "metadata": metadata,
@@ -322,7 +325,11 @@ def _section_content(content: dict[str, Any]) -> list[tuple[str, list[str]]]:
                     f"the next {meta['test_days']} complete days are evaluated as rolling "
                     "24-hour forecasts. No weather, load, generation, fuel, or neighboring "
                     "market inputs are used. UTC days do not exactly match local market "
-                    "days at daylight-saving changes.",
+                    "days at daylight-saving changes. The dashboard date selector is "
+                    "limited to this stored held-out period; it does not produce forecasts "
+                    "for arbitrary historical or future dates. Currency and MWh/kWh "
+                    "selections change display values only. INR is a converted DE-LU "
+                    "price, not a forecast for India.",
                 ),
             ],
         ),
@@ -421,7 +428,19 @@ def _section_content(content: dict[str, Any]) -> list[tuple[str, list[str]]]:
                     "forecast is recorded, extend the state-space model with that day's "
                     "actual prices without re-estimating parameters, and update GARCH "
                     "variance from resulting residuals. Repeat for each test day. "
-                    "Full implementation: src/forecasting.py; execution: main.py.",
+                    "Full implementation: src/forecasting.py; execution: main.py. The "
+                    "Streamlit dashboard lets users select a held-out UTC test date, "
+                    "chart window, models, actual-price visibility, interval visibility, "
+                    "line or step charts, and linear or symmetric-log axes. Its scorecard "
+                    "and history explorer offer selectable metrics, hourly/daily/weekly "
+                    "aggregation, rolling averages, typical UTC-hour views, price "
+                    "distributions, and CSV downloads. Users can select display currency "
+                    "and MWh/kWh. Available currencies use published ECB reference rates "
+                    "through Frankfurter; users may enter a positive manual rate for "
+                    "another three-letter currency code, while EUR remains available offline. These "
+                    "conversions affect displayed price-valued results and downloads only; "
+                    "source EUR/MWh data, model fitting, stored forecasts, interval "
+                    "coverage, and percentage metrics remain unchanged.",
                 ),
                 (
                     "5.4 Baseline Results",
@@ -531,7 +550,10 @@ def _section_content(content: dict[str, Any]) -> list[tuple[str, list[str]]]:
                     "near its nominal 80% target with a slightly narrower interval. "
                     "Forecasts and intervals can support procurement, flexible-demand, "
                     "and storage planning, but are not guarantees of savings. Findings "
-                    "are limited to this zone, input series, model settings, and test period.",
+                    "are limited to this zone, input series, model settings, and test period. "
+                    "The dashboard makes the held-out input-to-output comparison explorable; "
+                    "currency and energy-unit selections are display conversions and do not "
+                    "change either model's forecasts. An INR display is still DE-LU market data.",
                 ),
                 (
                     "8.2 Future Scope",
