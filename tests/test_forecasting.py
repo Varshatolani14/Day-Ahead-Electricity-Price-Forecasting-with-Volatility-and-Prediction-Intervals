@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 
 from src.forecasting import build_training_features, load_prices, maximum_test_days
+from src.display import convert_price_values, price_conversion_factor
 
 
 class ForecastingDataTests(unittest.TestCase):
@@ -55,6 +56,18 @@ class ForecastingDataTests(unittest.TestCase):
         prices = pd.Series(np.arange(len(index), dtype=float), index=index)
         with self.assertRaisesRegex(ValueError, "At least 181 complete days"):
             maximum_test_days(prices)
+
+    def test_inr_per_kwh_conversion_preserves_negative_prices(self):
+        prices = pd.Series([100.0, -50.0])
+        converted = convert_price_values(prices, 106.084, "kWh")
+        self.assertAlmostEqual(converted.iloc[0], 10.6084)
+        self.assertAlmostEqual(converted.iloc[1], -5.3042)
+
+    def test_conversion_rejects_invalid_exchange_rates_and_units(self):
+        with self.assertRaisesRegex(ValueError, "finite positive"):
+            price_conversion_factor(0.0, "MWh")
+        with self.assertRaisesRegex(ValueError, "Energy unit"):
+            price_conversion_factor(1.0, "GWh")
 
 
 if __name__ == "__main__":

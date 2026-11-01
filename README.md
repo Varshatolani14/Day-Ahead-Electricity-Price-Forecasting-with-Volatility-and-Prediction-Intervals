@@ -35,20 +35,30 @@ stops the app and makes its charts and downloads unavailable.
 3. Run `python main.py`. This prepares the forecasts, charts, metrics, and report.
 4. Start the dashboard with `python -m streamlit run app.py` (or double-click
    `run_dashboard.bat`). Keep the terminal open and use the local link it prints.
-5. In “Forecast input: choose a test date (UTC),” select a date. The app shows
-   that day's 24 hourly forecasts, prediction intervals, actual prices, and
-   daily errors. This is a held-out historical test date: actual prices are
-   included only to evaluate the already-made forecast.
-6. Show the overall actual-versus-forecast chart, the two-model metric table,
-   and the EDA chart. Set “Days shown in forecast chart” to the full test
-   period shown in the sidebar (520 days for the included data).
+5. In the sidebar, select a held-out test date. The dashboard starts with INR
+   when live exchange rates are available. Choose any currency supported by
+   the rates service, or enter another three-letter code and a manual rate.
+   Switch between MWh and kWh; conversions affect display/downloads only.
+6. Explore the forecast chart: choose the date window, which model lines to
+   show, actuals, prediction intervals, line/step style, and linear or
+   symmetric-log price axis.
+7. Open the Model scorecard and Historical explorer tabs to select comparison
+   metrics, historical time range, aggregation, price pattern, and rolling
+   average. Download the selected day's predictions, full backtest, or
+   converted historical data.
 
-The dashboard uses the included historical CSV; it has no data-upload form.
-The test-date selector chooses which existing 24-hour forecast to inspect.
-The sidebar slider only changes how many recent test days are visible in the
-overview chart. Neither control retrains the models or changes the reported
-full-test metrics. For a different test-window length, run
-`python main.py --test-days 14` and then restart or refresh the dashboard.
+The source dataset and fitted forecasts remain in EUR/MWh. Live currency rates
+are the latest published ECB reference rates accessed through Frankfurter and
+cached for one hour; they are indicative, not trading quotes. If the service is
+unavailable, use EUR or enter a manual conversion rate. Actual market data and
+model results are never altered by these display controls. The date selector
+contains only days in the historical held-out test period because there are no
+observed outcomes outside that period to evaluate. The chart window changes
+visibility only; it does not retrain the models or change full-test metrics.
+The default INR/kWh view is a currency/unit conversion of German–Luxembourg
+prices, not an Indian electricity-market price forecast.
+For a different test-window length, run `python main.py --test-days 14` and
+then restart or refresh the dashboard.
 
 If a previously open tab shows missing images or “Failed to fetch dynamically
 imported module”, verify the server is still running, then hard-refresh the tab
@@ -62,9 +72,23 @@ dashboard to regenerate the forecast results and image files.
 - `src/forecasting.py` — data handling, leakage-safe features, models, and metrics.
 - `main.py` — reproducible backtest and report-generation entry point.
 - `app.py` — Streamlit dashboard for the data, model comparison, and forecasts.
+- `src/display.py` — validated, display-only currency/unit conversion.
 - `reports/TSA_AAT_Report.pdf` — submission-ready report in the supplied section order.
 - `reports/TSA_AAT_Report.docx` — editable copy of the report.
+- `reports/Day_Ahead_Electricity_Forecasting_Presentation.pptx` — editable project presentation.
+- `reports/Day_Ahead_Electricity_Forecasting_Presentation.pdf` — ready-to-present PDF version.
+- `reports/presentation_assets/` — presentation figures and genuine dashboard screenshots.
 - `tests/` — fast checks for data validation and forecasting features.
+
+## Rebuild the presentation
+
+After installing the requirements, run `python reports/build_presentation.py`.
+This recreates the editable PowerPoint and its supporting charts under
+`reports/presentation_assets/`. The presentation contains the problem and
+research context, dataset exploration, both forecasting methods, the
+chronological evaluation design, measured results, dashboard screenshots, and
+study limitations. Replace the student-name and USN placeholders before
+presenting.
 
 ## Data and method
 
